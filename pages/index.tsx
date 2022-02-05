@@ -1,9 +1,10 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 import styles from '../styles/components/Home.module.scss';
 
-const Home: NextPage = () => {
+const Home: NextPage = (props: any) => {
   return (
     <div className={styles.container}>
       <Head>
@@ -14,13 +15,17 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to <a href="https://featuringcode.com">Featuring Code</a>
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
+          Navigate to {' '}
+          <Link href="/profile">
+            <a>Profile</a>
+          </Link>
         </p>
+
+        <p>{props.data}</p>
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
@@ -68,5 +73,16 @@ const Home: NextPage = () => {
     </div>
   );
 };
+
+export async function getServerSideProps(context: any) {
+  const data = context.query.data || 'default data';
+  //  http://localhost:3000?data='some-data'
+
+  return {
+    props: {
+      data
+    } // will be passed to the page component as props
+  };
+}
 
 export default Home;
