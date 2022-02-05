@@ -1,10 +1,15 @@
+import { wrapper } from 'app/store';
+import { selectProfile, setProfileData } from 'app/store/slices/profile';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 import styles from '../styles/components/Home.module.scss';
 
 const Home: NextPage = (props: any) => {
+  const profile = useSelector(selectProfile);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -15,12 +20,12 @@ const Home: NextPage = (props: any) => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://featuringcode.com">Featuring Code</a>
+          Welcome to <a href="https://featuringcode.com">Featuring Code</a>, {profile.name}
         </h1>
 
         <p className={styles.description}>
           Navigate to {' '}
-          <Link href="/profile">
+          <Link href="/profile" shallow={true}>
             <a>Profile</a>
           </Link>
         </p>
@@ -74,8 +79,10 @@ const Home: NextPage = (props: any) => {
   );
 };
 
-export async function getServerSideProps(context: any) {
-  const data = context.query.data || 'default data';
+export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
+
+  store.dispatch(setProfileData('mihai'));
+  const data = query.data || 'default data';
   //  http://localhost:3000?data='some-data'
 
   return {
@@ -83,6 +90,6 @@ export async function getServerSideProps(context: any) {
       data
     } // will be passed to the page component as props
   };
-}
+});
 
 export default Home;

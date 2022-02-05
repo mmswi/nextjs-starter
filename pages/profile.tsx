@@ -1,8 +1,13 @@
+import { wrapper } from 'app/store';
+import { selectProfile } from 'app/store/slices/profile';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
 const Profile: NextPage = (props: any) => {
+  const profile = useSelector(selectProfile) as any;
+
   return (
     <div className="container">
       <Head>
@@ -13,7 +18,7 @@ const Profile: NextPage = (props: any) => {
 
       <main className="row">
         <h1 className="text-center">
-          Your <a href="https://featuringcode.com">Featuring Code</a> Profile
+          Your <a href="https://featuringcode.com">Featuring Code</a>, {profile?.name}
         </h1>
         <p>
           Go to <Link href="/">
@@ -29,15 +34,16 @@ const Profile: NextPage = (props: any) => {
   );
 };
 
-export async function getServerSideProps(context: any) {
-  const profileData = context.query.data || 'profile data';
-  //  http://localhost:3000?data='some-data'
+export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
+  console.log('store state', store.getState());
+  const profileData = query.data || 'profile data';
+  //  http://localhost:3000/profile?data='some-data'
 
   return {
     props: {
       profileData
-    } // will be passed to the page component as props
+    }
   };
-}
+});
 
 export default Profile;
