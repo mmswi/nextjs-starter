@@ -1,1 +1,9 @@
-@import "vendors/bootstrap.variables";
+@import "~bootstrap/scss/functions";
+
+@import "variables/colors";
+@import "variables/spaces";
+@import "variables/spaces";
+
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/utilities";
