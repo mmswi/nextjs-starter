@@ -24,9 +24,11 @@ const Home: NextPage = (props: any) => {
         </h1>
 
         <p className={styles.description}>
-          Navigate to {' '}
-          <Link href="/profile" shallow={true}>
+        Go to <Link href="/profile">
             <a>Profile</a>
+          </Link> {' | '}
+          <Link href="/product">
+            <a>Product</a>
           </Link>
         </p>
 
@@ -80,8 +82,10 @@ const Home: NextPage = (props: any) => {
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
-
+  console.log('store state on the server before dispatch', store.getState());
   store.dispatch(setProfileData('mihai'));
+  console.log('store state on the server after dispatch', store.getState());
+
   const data = query.data || 'default data';
   //  http://localhost:3000?data='some-data'
 

@@ -4,11 +4,10 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
 import { wrapper } from 'app/store';
-import { selectProfile } from 'app/store/slices/profile';
-import { selectProduct } from 'app/store/slices/product';
+import { fetchProduct, selectProduct } from 'app/store/slices/product';
 
-const Profile: NextPage = (props: any) => {
-  const profile = useSelector(selectProfile) as any;
+
+const Product: NextPage = (props: any) => {
   const product = useSelector(selectProduct) as any;
 
   return (
@@ -21,22 +20,20 @@ const Profile: NextPage = (props: any) => {
 
       <main className="row">
         <h1 className="text-center">
-          Your <a href="https://featuringcode.com">Featuring Code</a>, {profile?.name}
+          Product name: {product?.name}
         </h1>
         <p>
           Go to <Link href="/">
-            <a>Home</a>
+            <a>Home page</a>
           </Link> {' | '}
-          <Link href="/product">
-            <a>Product</a>
+          <Link href="/profile">
+            <a>Profile</a>
           </Link>
         </p>
 
         <p>
-          Hello, {props.profileData}!
+          Product, {props.productData}!
         </p>
-
-        {product?.name ? <div>Product history: <strong>{product.name}</strong></div> : <></>}
       </main>
     </div>
   );
@@ -44,14 +41,16 @@ const Profile: NextPage = (props: any) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
   console.log('store state on the server before dispatch', store.getState());
-  const profileData = query.data || 'profile data';
-  //  http://localhost:3000/profile?data='some-data'
+  const productData = query.data || 'page data';
+  //  http://localhost:3000/product?data='some-data'
+  await store.dispatch(fetchProduct());
+  console.log('store state on the server after dispatch', store.getState());
 
   return {
     props: {
-      profileData
+      productData
     }
   };
 });
 
-export default Profile;
+export default Product;
