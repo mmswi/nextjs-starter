@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 import { AppState, AppThunk } from '..';
 
-export const ProfileSlice = createSlice({
+export const ProductSlice = createSlice({
   name: 'product',
 
   initialState: {
@@ -45,4 +45,4 @@ export const fetchProduct =
       };
 
 
-export default ProfileSlice.reducer;
+export default ProductSlice.reducer;
