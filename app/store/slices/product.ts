@@ -28,7 +28,7 @@ export const ProductSlice = createSlice({
   }
 });
 
-export const { setProductData } = ProfileSlice.actions;
+export const { setProductData } = ProductSlice.actions;
 
 export const selectProduct = (state: AppState) => state.product;
 
