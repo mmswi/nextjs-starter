@@ -10,12 +10,6 @@ export const ProfileSlice = createSlice({
   },
 
   reducers: {
-    [HYDRATE]: (state, action) => {
-      console.log('HYDRATE in reducerssss', action.payload);
-
-      // state.name = action.payload.profile.name;
-    },
-
     setProfileData: (state, action) => {
       state.name = action.payload;
     }
@@ -24,6 +18,10 @@ export const ProfileSlice = createSlice({
   extraReducers: {
     [HYDRATE]: (state, action) => {
       console.log('HYDRATE', action.payload);
+
+      if (!action.payload.profile.name) {
+        return state;
+      }
 
       state.name = action.payload.profile.name;
     }
