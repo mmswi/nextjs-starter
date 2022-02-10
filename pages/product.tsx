@@ -1,14 +1,14 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 
-import { wrapper } from 'app/store';
-import { fetchProduct, selectProduct } from 'app/store/slices/product';
+import { AppState, wrapper } from 'app/store';
+import { fetchProduct } from 'app/store/slices/product';
 
 
 const Product: NextPage = (props: any) => {
-  const product = useSelector(selectProduct) as any;
+  const { product, profile } = props;
 
   return (
     <div className="container">
@@ -22,6 +22,7 @@ const Product: NextPage = (props: any) => {
         <h1 className="text-center">
           Product name: {product?.name}
         </h1>
+        <h3>Profile: {profile?.name}</h3>
         <p>
           Go to <Link href="/">
             <a>Home page</a>
@@ -53,4 +54,9 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async ({ q
   };
 });
 
-export default Product;
+const mapStateToProps = (state: AppState) => ({
+  profile: state.profile,
+  product: state.product
+});
+
+export default connect(mapStateToProps)(Product);
