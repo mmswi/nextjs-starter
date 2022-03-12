@@ -3,8 +3,8 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { connect } from 'react-redux';
 
-import { AppState, wrapper } from 'app/store';
-import { fetchProduct } from 'app/store/slices/product';
+import { AppState, wrapper } from 'app/client/store';
+import { fetchProduct } from 'app/client/store/slices/product';
 
 
 const Product: NextPage = (props: any) => {

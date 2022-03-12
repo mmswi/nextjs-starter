@@ -3,9 +3,9 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
-import { wrapper } from 'app/store';
-import { selectProfile } from 'app/store/slices/profile';
-import { selectProduct } from 'app/store/slices/product';
+import { wrapper } from 'app/client/store';
+import { selectProfile } from 'app/client/store/slices/profile';
+import { selectProduct } from 'app/client/store/slices/product';
 
 const Profile: NextPage = (props: any) => {
   const profile = useSelector(selectProfile) as any;

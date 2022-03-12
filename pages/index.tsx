@@ -1,5 +1,5 @@
-import { wrapper } from 'app/store';
-import { selectProfile, setProfileData } from 'app/store/slices/profile';
+import { wrapper } from 'app/client/store';
+import { selectProfile, setProfileData } from 'app/client/store/slices/profile';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
