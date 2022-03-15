@@ -1,5 +1,4 @@
 import { Container } from 'inversify';
-import 'reflect-metadata';
 
 import ApiGateway from 'app/shared/api.gateway';
 import { ApiGatewayInterface } from 'app/shared/api.gateway.interface';
