@@ -1,14 +1,38 @@
+import { ProductService } from 'app/client/container/services/product.service';
+import { UserService } from 'app/client/container/services/user.service';
 import { wrapper } from 'app/client/store';
 import { selectProfile, setProfileData } from 'app/client/store/slices/profile';
+import ApiGateway from 'app/shared/api.gateway';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styles from '../styles/components/Home.module.scss';
 
 const Home: NextPage = (props: any) => {
   const profile = useSelector(selectProfile);
+
+  const apiGateway = new ApiGateway('http://custom-link-super-custom.com/');
+  const userService = new UserService(apiGateway);
+  const productService = new ProductService(apiGateway, userService);
+
+  const [user, setUser] = useState({}) as any;
+  const [favs, setFavs] = useState(null) as any;
+
+  const getFavourites = async () => {
+    const favourites = await productService.getUserFavourites('abcd');
+    console.log('favourites ', favourites);
+    setFavs(favourites);
+  };
+
+  useEffect(() => {
+    userService.getModel('abc').then((response: any) => {
+      console.log('response is ', response);
+      setUser(response);
+    });
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -22,6 +46,17 @@ const Home: NextPage = (props: any) => {
         <h1 className={styles.title}>
           Welcome to <a href="https://featuringcode.com">Featuring Code</a>, {profile.name}
         </h1>
+
+        <br />
+        <br />
+
+        <h1 className={styles.title}>Got model for user: {user.name}</h1>
+
+        <div>
+          The user favourites {favs} <br />
+          <button onClick={getFavourites}>Get Favs</button>
+        </div>
+
 
         <p className={styles.description}>
         Go to <Link href="/profile">

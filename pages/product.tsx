@@ -5,10 +5,26 @@ import { connect } from 'react-redux';
 
 import { AppState, wrapper } from 'app/client/store';
 import { fetchProduct } from 'app/client/store/slices/product';
+import { ProductService } from 'app/client/container/services/product.service';
+import { useEffect, useState } from 'react';
+import ApiGateway from 'app/shared/api.gateway';
+import { UserService } from 'app/client/container/services/user.service';
 
 
 const Product: NextPage = (props: any) => {
   const { product, profile } = props;
+
+  const apiGateway = new ApiGateway('http://custom-link-super-custom.com/');
+  const userService = new UserService(apiGateway);
+  const productService = new ProductService(apiGateway, userService);
+
+  const [prod, setProd] = useState(null);
+
+  useEffect(() => {
+    productService.getProduct('productId').then(response => {
+      setProd(response);
+    });
+  }, []);
 
   return (
     <div className="container">
@@ -19,6 +35,11 @@ const Product: NextPage = (props: any) => {
       </Head>
 
       <main className="row">
+        <h1>
+          THE PRODUCT FROM THE SERVICE: {prod}
+        </h1>
+        <br />
+        <br />
         <h1 className="text-center">
           Product name: {product?.name}
         </h1>
