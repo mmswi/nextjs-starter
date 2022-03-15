@@ -1,3 +1,4 @@
+
 import { ApiGatewayInterface } from './api.gateway.interface';
 
 export default class ApiGateway implements ApiGatewayInterface {

@@ -1,22 +1,24 @@
-import { ProductService } from 'app/client/container/services/product.service';
-import { UserService } from 'app/client/container/services/user.service';
-import { wrapper } from 'app/client/store';
-import { selectProfile, setProfileData } from 'app/client/store/slices/profile';
-import ApiGateway from 'app/shared/api.gateway';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+
+import { TYPES } from 'app/client/container/types';
+import { wrapper } from 'app/client/store';
+import { selectProfile, setProfileData } from 'app/client/store/slices/profile';
 import styles from '../styles/components/Home.module.scss';
+import { UserServiceInterface } from 'app/client/container/interfaces/user.service.interface';
+import { appContainer } from 'app/client/container';
+import { ProductServiceInterface } from 'app/client/container/interfaces/product.service.interface';
 
 const Home: NextPage = (props: any) => {
   const profile = useSelector(selectProfile);
 
-  const apiGateway = new ApiGateway('http://custom-link-super-custom.com/');
-  const userService = new UserService(apiGateway);
-  const productService = new ProductService(apiGateway, userService);
+
+  const userService = appContainer.get<UserServiceInterface>(TYPES.UserService);
+  const productService = appContainer.get<ProductServiceInterface>(TYPES.ProductService);
 
   const [user, setUser] = useState({}) as any;
   const [favs, setFavs] = useState(null) as any;
