@@ -1,3 +1,4 @@
+import { InputToDiv } from 'app/client/components/examples/InputToDiv';
 import { wrapper } from 'app/store';
 import { selectProfile, setProfileData } from 'app/store/slices/profile';
 import type { NextPage } from 'next';
@@ -34,6 +35,10 @@ const Home: NextPage = (props: any) => {
 
         <p>{props.data}</p>
 
+        <InputToDiv />
+
+        <InputToDiv />
+
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
             <h2>Documentation &rarr;</h2>
@@ -61,6 +66,7 @@ const Home: NextPage = (props: any) => {
             <p>
               Instantly deploy your Next.js site to a public URL with Vercel.
             </p>
+            <div id="my-input-portal"></div>
           </a>
         </div>
       </main>
